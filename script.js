@@ -1,28 +1,24 @@
-const gridContainer = document.getElementById('word-search-grid');
-const wordsList = document.getElementById('words-to-find');
-
 function renderGrid(grid) {
     gridContainer.innerHTML = '';
-    grid.forEach(row => {
-        row.forEach(letter => {
+    grid.forEach((row, rowIndex) => {
+        row.forEach((letter, colIndex) => {
             const cell = document.createElement('div');
             cell.className = 'grid-cell';
             cell.textContent = letter;
+            cell.dataset.row = rowIndex;
+            cell.dataset.col = colIndex;
             gridContainer.appendChild(cell);
         });
     });
-}
 
-function renderWordList(words) {
-    wordsList.innerHTML = '';
-    words.forEach(word => {
-        const listItem = document.createElement('li');
-        listItem.textContent = word;
-        wordsList.appendChild(listItem);
+    // Adding event listeners for interactivity
+    const cells = document.querySelectorAll('.grid-cell');
+    cells.forEach(cell => {
+        cell.addEventListener('click', () => {
+            cell.classList.toggle('highlighted');
+        });
     });
 }
 
 renderGrid(wordSearchGrid);
 renderWordList(tamilWords);
-
-// Future code for handling user interaction and highlighting words will go here
